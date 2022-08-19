@@ -1,8 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRecoilValue } from 'recoil'
+import { modalState } from '../atoms/modalAtom'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
+import Modal from '../components/Modal'
 import MovieRow from '../components/MovieRow'
 import useAuth from '../hooks/useAuth'
 import { Movie } from '../typings'
@@ -62,11 +65,12 @@ const Home = ({
   comedyMovies,
   horrorMovies,
   romanceMovies,
-  documentaries, 
+  documentaries,
 }: MovieProps) => {
   const { loading } = useAuth();
+  const showModal = useRecoilValue(modalState)
 
-  if(loading) return null;
+  if (loading) return null;
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
@@ -87,8 +91,7 @@ const Home = ({
           <MovieRow title="Romance Movies" movies={romanceMovies} />
           <MovieRow title="Documentaries" movies={documentaries} />
         </section>
-
-        {/* Modal */}
+        {showModal && <Modal />}
       </main>
     </div>
   )
