@@ -14,7 +14,7 @@
 
 @layer components {
   .headerLink {
-    @apply cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3];
+    @apply cursor-pointer text-lg font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3];
   }
 
   .bannerButton {
@@ -71,5 +71,13 @@
 
   .menu .MuiMenuItem-root {
     @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100F];
+  }
+
+  .planListItem {
+    @apply flex items-center gap-x-2 text-lg
+  }
+  
+  .checkIcon {
+    @apply h-7 w-7 text-[#E50914]
   }
 }

@@ -1,6 +1,7 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { DocumentData } from "firebase/firestore";
 import { useRef, useState } from "react";
+import { DocumentData } from "firebase/firestore";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+
 import { Movie } from "../typings";
 import Thumbnail from "./Thumbnail";
 
@@ -26,7 +27,6 @@ function MovieRow({ title, movies }: MovieRowProps) {
       rowRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' })
     }
   }
-
 
   return (
     <div className="h-40 space-y-0.5">

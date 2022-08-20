@@ -1,8 +1,9 @@
 import { useState } from "react";
-import useAuth from "../hooks/useAuth";
-import useSubscription from "../hooks/useSubscription";
-import { goToBillingPortal } from "../lib/stripe";
+
 import Loader from "./Loader"
+import useAuth from "../hooks/useAuth";
+import { goToBillingPortal } from "../lib/stripe";
+import useSubscription from "../hooks/useSubscription";
 
 function Membership() {
   const { user } = useAuth();

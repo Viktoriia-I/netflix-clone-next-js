@@ -1,6 +1,6 @@
+import React from 'react'
 import { CheckIcon, XIcon } from '@heroicons/react/outline';
 import { Product } from '@stripe/firestore-stripe-payments';
-import React from 'react'
 
 interface ProductsInterface {
   products: Product[];

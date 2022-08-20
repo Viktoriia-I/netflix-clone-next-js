@@ -1,15 +1,15 @@
-import { BellIcon, SearchIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
+import { UserIcon } from '@heroicons/react/solid';
+
 import BasicMenu from './BasicMenu';
-
-
-const headerLinks = ['Home', 'TV Shows', 'Movies', 'New & Popular', 'My List']
+import { headerLinks } from '../helpers/helperConstants';
+import netflixLogo from '../img/netflix-logo-png-2562.png';
+import useAuth from '../hooks/useAuth';
 
 function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const { logout } = useAuth();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,35 +29,22 @@ function Header() {
     <header className={`${isScrolled && 'bg-[#141414]'}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
         <img
-          src="https://rb.gy/ulxxee"
-          width={100}
-          height={100}
+          src={netflixLogo.src}
+          alt='Netflix Logo'
+          width={120}
+          height={120}
           className="cursor-pointer object-contain"
         />
-
         <BasicMenu />
-
         <ul className="hidden space-x-4 md:flex">
-          <li className="headerLink">Home</li>
-          <li className="headerLink">TV Shows</li>
-          <li className="headerLink">Movies</li>
-          <li className="headerLink">New & Popular</li>
-          <li className="headerLink">My List</li>
+          {headerLinks?.map(headerLink => <li className="headerLink">{headerLink}</li>)}
         </ul>
-
       </div>
       <div className="flex items-center space-x-4 text-sm font-light">
-        <SearchIcon className="hidden sm:inline h-6 w-6" />
-        <p className="hidden lg:inline">Kids</p>
-        <BellIcon className="h-6 w-6" />
-        {/* <Link href="/account"> */}
-        <img
-          onClick={logout}
-          src="https://rb.gy/g1pwyx"
-          alt=""
-          className="cursor-pointer rounded"
-        />
-        {/* </Link> */}
+        <Link href="/account">
+          <UserIcon className="h-7 w-7 cursor-pointer" />
+        </Link>
+        <button className="text-lg font-medium hover:underline" onClick={logout}>Sign Out</button>
       </div>
     </header>
   )

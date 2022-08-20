@@ -1,7 +1,10 @@
-import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import { useState } from 'react'
+import Menu from '@mui/material/Menu'
+import Button from '@mui/material/Button'
+import MenuItem from '@mui/material/MenuItem'
+import { ViewListIcon } from '@heroicons/react/outline'
+
+import { headerLinks } from '../helpers/helperConstants'
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -25,7 +28,7 @@ export default function BasicMenu() {
         onClick={handleClick}
         className="!capitalize !text-white"
       >
-        Browse
+        <ViewListIcon className="w-8 h-8" />
       </Button>
       <Menu
         id="basic-menu"
@@ -37,11 +40,7 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Home</MenuItem>
-        <MenuItem onClick={handleClose}>TV Shows</MenuItem>
-        <MenuItem onClick={handleClose}>Movies</MenuItem>
-        <MenuItem onClick={handleClose}>New & Popular</MenuItem>
-        <MenuItem onClick={handleClose}>My List</MenuItem>
+        {headerLinks?.map(link => <MenuItem onClick={handleClose}>{link}</MenuItem>)}
       </Menu>
     </div>
   )

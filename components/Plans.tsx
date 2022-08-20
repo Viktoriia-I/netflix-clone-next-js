@@ -1,12 +1,15 @@
+import Link from "next/link";
+import Head from "next/head";
+import { useState } from "react";
 import { CheckIcon } from "@heroicons/react/outline";
 import { Product } from "@stripe/firestore-stripe-payments";
-import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
+
+import Table from "./Table";
+import Loader from "./Loader";
 import useAuth from "../hooks/useAuth";
 import { loadCheck } from "../lib/stripe";
-import Loader from "./Loader";
-import Table from "./Table";
+import netflixLogo from '../img/netflix-logo-png-2562.png';
+import { plansDescriptions } from "../helpers/helperConstants";
 
 interface ProductsInterface {
   products: Product[];
@@ -15,12 +18,12 @@ interface ProductsInterface {
 function Plans({ products }: ProductsInterface) {
   const { logout, user } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[2]);
-  const [isBillingLoading, setBillingLoading] = useState(false);
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   const subscribeToPlan = () => {
-    if(!user) return
+    if (!user) return
     loadCheck(selectedPlan?.prices[0].id!);
-    setBillingLoading(true)
+    setIsPaymentLoading(true)
   }
 
   return (
@@ -33,10 +36,10 @@ function Plans({ products }: ProductsInterface) {
       <header className="border-b border-white/10 bg=[#141414]">
         <Link href="/">
           <img
-            src="https://rb.gy/ulxxee"
-            alt="Netflix"
-            width={150}
-            height={90}
+            src={netflixLogo.src}
+            alt='Netflix Logo'
+            width={120}
+            height={120}
             className="cursor-pointer object-contain"
           />
         </Link>
@@ -45,15 +48,14 @@ function Plans({ products }: ProductsInterface) {
       <main className="mx-auto pt-28 max-w-5xl px-5 pb-12 transition-all md:px-10">
         <h1 className="mb-3 text-3xl font-medium">Choose the plan which is right for you</h1>
         <ul>
-          <li className="flex items-center gap-x-2 text-lg">
-            <CheckIcon className="h-7 w-7 text-[#E50914]" /> Watch all you want.Ad-free.
-          </li>
-          <li className="flex items-center gap-x-2 text-lg">
-            <CheckIcon className="h-7 w-7 text-[#E50914]" /> Recommendations just for you.
-          </li>
-          <li className="flex items-center gap-x-2 text-lg">
-            <CheckIcon className="h-7 w-7 text-[#E50914]" /> Change or cancel your plan anytime.
-          </li>
+          {plansDescriptions?.map(plansDescription => {
+            return (
+              <li className="planListItem" key={plansDescription?.id}>
+                <CheckIcon className="checkIcon" />
+                {plansDescription?.description}
+              </li>
+            )
+          })}
         </ul>
 
         <div className="mt-4 flex flex-col space-y-4">
@@ -74,15 +76,11 @@ function Plans({ products }: ProductsInterface) {
           <Table products={products} selectedPlan={selectedPlan} />
 
           <button
-            disabled={!selectedPlan || isBillingLoading}
-            className={`mx-auto w-11/12 rounded bg-[#e50914] py-4 text-xl shadow hover:bg-[#f6121d] md:w-[420px] ${isBillingLoading && 'opacity-60'}`}
+            disabled={!selectedPlan || isPaymentLoading}
+            className={`mx-auto w-11/12 rounded bg-[#e50914] py-4 text-xl shadow hover:bg-[#f6121d] md:w-[420px] ${isPaymentLoading && 'opacity-60'}`}
             onClick={subscribeToPlan}
           >
-            {isBillingLoading ? (
-              <Loader color="dark:fill-gray-300" />
-            ) : (
-              "Subscribe"
-            )}
+            {isPaymentLoading ? <Loader color="dark:fill-gray-300" /> : "Subscribe"}
           </button>
         </div>
       </main>

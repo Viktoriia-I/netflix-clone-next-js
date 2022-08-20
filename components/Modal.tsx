@@ -1,26 +1,25 @@
+import Modal from '@mui/material/Modal';
+import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player/lazy';
+import toast, { Toaster } from 'react-hot-toast';
 import { CheckIcon, VolumeOffIcon, XIcon } from '@heroicons/react/outline';
 import { PlusIcon, ThumbUpIcon, VolumeUpIcon } from '@heroicons/react/solid';
-import Modal from '@mui/material/Modal';
 import { deleteDoc, doc, DocumentData, onSnapshot, setDoc, collection } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
-import ReactPlayer from 'react-player/lazy';
-import { useRecoilState } from 'recoil';
-import { modalState, movieState } from '../atoms/modalAtom';
-import { Element, Genre, Movie } from '../typings';
+
 import { db } from '../firebase'
 import useAuth from '../hooks/useAuth';
-import toast, { Toaster } from 'react-hot-toast';
-
+import { Element, Genre, Movie } from '../typings';
+import { modalState, movieState } from '../atoms/modalAtom';
 
 function MovieModal() {
+  const { user } = useAuth();
   const [currentMovie] = useRecoilState(movieState)
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [trailer, setTrailer] = useState('');
   const [genres, setGenres] = useState<Genre[]>([])
   const [muted, setMuted] = useState(true);
   const [addedToList, setAddedToList] = useState(false);
-  const { user } = useAuth();
   const [movies, setMovies] = useState<Movie[] | DocumentData[]>([])
 
   const toastStyle = {
@@ -123,10 +122,6 @@ function MovieModal() {
           />
           <div className="absolute bottom-10 flex w-full item-center justify-between px-10">
             <div className="flex space-x-2">
-              <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-                <FaPlay className="h-7 w-7 text-black" />
-                Play
-              </button>
               <button className="modalButton" onClick={handleAddToList}>
                 {addedToList ? <CheckIcon className="h-7 w-7" /> : <PlusIcon className="h-7 w-7" />}
               </button>

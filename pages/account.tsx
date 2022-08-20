@@ -1,13 +1,14 @@
 import Head from "next/head"
 import Link from "next/link"
 import { GetStaticProps } from "next";
-import useAuth from "../hooks/useAuth";
-import useSubscription from "../hooks/useSubscription"
-import { getProducts, Product } from "@stripe/firestore-stripe-payments";
-import payments from "../lib/stripe";
 import { UserIcon, ViewGridAddIcon } from "@heroicons/react/outline";
-import Membership from "../components/Membership";
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
 
+import netflixLogo from '../img/netflix-logo-png-2562.png';
+import payments from "../lib/stripe";
+import useAuth from "../hooks/useAuth";
+import Membership from "../components/Membership";
+import useSubscription from "../hooks/useSubscription"
 
 interface Props {
   products: Product[]
@@ -25,10 +26,16 @@ function Account({ products }: Props) {
       </Head>
       <header className="bg-[#141414]">
         <Link href="/">
-          <UserIcon className="h-6 w-6" />
+          <img
+            src={netflixLogo.src}
+            alt='Netflix Logo'
+            width={100}
+            height={100}
+            className="cursor-pointer object-contain" 
+          />
         </Link>
         <Link href="/account">
-          <UserIcon className="h-6 w-6" />
+          <UserIcon className="h-6 w-6 cursor-pointer" />
         </Link>
       </header>
 

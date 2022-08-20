@@ -1,8 +1,9 @@
-import { Movie } from "../typings";
 import Image from "next/image";
+import { Movie } from "../typings";
 import { useRecoilState } from "recoil";
-import { modalState, movieState } from "../atoms/modalAtom";
 import { DocumentData } from "firebase/firestore";
+
+import { modalState, movieState } from "../atoms/modalAtom";
 
 interface MovieProps {
   movie: Movie | DocumentData;

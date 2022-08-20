@@ -1,19 +1,19 @@
-import { getProducts, Product } from '@stripe/firestore-stripe-payments'
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRecoilValue } from 'recoil'
-import { modalState, movieState } from '../atoms/modalAtom'
-import Banner from '../components/Banner'
-import Header from '../components/Header'
-import Modal from '../components/Modal'
-import MovieRow from '../components/MovieRow'
-import Plans from '../components/Plans'
+import { getProducts, Product } from '@stripe/firestore-stripe-payments'
+
+import { Movie } from '../typings'
+import payments from '../lib/stripe'
 import useAuth from '../hooks/useAuth'
 import useList from '../hooks/useList'
-import useSubscription from '../hooks/useSubscription'
-import payments from '../lib/stripe'
-import { Movie } from '../typings'
+import Modal from '../components/Modal'
+import Plans from '../components/Plans'
 import requests from '../utils/requests'
+import Banner from '../components/Banner'
+import Header from '../components/Header'
+import MovieRow from '../components/MovieRow'
+import useSubscription from '../hooks/useSubscription'
+import { modalState, movieState } from '../atoms/modalAtom'
 
 interface MovieProps {
   netflixOriginals: Movie[]
@@ -91,6 +91,7 @@ const Home = ({
   if (loading || subscription === null) return null;
 
   if(!subscription) return <Plans products={products} />
+  
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
       <Head>
@@ -100,7 +101,6 @@ const Home = ({
       <Header />
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
         <Banner netflixOriginals={netflixOriginals} />
-
         <section className="md:space-y-24">
           {list.length > 0 && <MovieRow title="My List" movies={list} />}
           <MovieRow title="Trending Now" movies={trendingNow} />
