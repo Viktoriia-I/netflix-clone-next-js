@@ -46,7 +46,7 @@ function Membership() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-between pt-4 pb-4 md:flex-row pb-0">
+        <div className="flex flex-col justify-between pt-4 pb-4 md:flex-row md:pb-0">
           <div>
             <p>
               {subscription?.cancel_at_period_end
